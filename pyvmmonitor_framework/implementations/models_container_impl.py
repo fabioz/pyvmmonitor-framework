@@ -2,24 +2,19 @@
 #
 # Copyright: Brainwy Software
 from StringIO import StringIO
-from collections import OrderedDict
 import sys
 
 from pyvmmonitor_core import thread_utils, overrides
 from pyvmmonitor_core.weak_utils import get_weakref
-from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContainer
+from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContainer,\
+    EPModelsContainerNode
 
 
 
-class _Node(object):
+class _Node(EPModelsContainerNode):
 
     __slots__ = ['parent', 'data', 'obj_id', 'children', '_prefix_to_id']
 
-    def __init__(self, parent, obj_id, data):
-        self.parent = parent
-        self.obj_id = obj_id
-        self.data = data
-        self.children = OrderedDict()
 
     def add_child(self, node):
         self.children[node.obj_id] = node
@@ -228,9 +223,6 @@ class ModelsContainer(EPModelsContainer):
 
     @overrides(EPModelsContainer.itertreenodes)
     def itertreenodes(self, node=None):
-        '''
-        Iter nodes sorted in tree order
-        '''
         if node is None:
             node = self._root
 
@@ -242,9 +234,6 @@ class ModelsContainer(EPModelsContainer):
 
     @overrides(EPModelsContainer.iteritems)
     def iteritems(self):
-        '''
-        Iter unsorted
-        '''
         for key, node in self._fast.iteritems():
             yield key, node.data
 

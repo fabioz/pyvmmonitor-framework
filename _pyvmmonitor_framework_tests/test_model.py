@@ -31,6 +31,9 @@ def test_find_instance():
     model['m2'] = M2()
 
     assert isinstance(model.find_instance(M1), M1)
+    assert 'm1' in model
+    with pytest.raises(AssertionError):
+        model['m1'] = M2()
 
 
 def test_model_as_root():

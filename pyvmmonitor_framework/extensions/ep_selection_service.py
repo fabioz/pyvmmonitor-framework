@@ -3,6 +3,7 @@
 # Copyright: Brainwy Software
 from pyvmmonitor_core.callback import Callback
 from pyvmmonitor_framework.extensions.ep_selection_history import EPSelectionHistory
+from pyvmmonitor_core import abstract
 
 
 class EPSelectionService(EPSelectionHistory):
@@ -10,6 +11,7 @@ class EPSelectionService(EPSelectionHistory):
     def __init__(self):
         self.on_selection_changed = Callback()  # Called as on_selection_changed(source, selection)
 
+    @abstract
     def set_selection(self, source, selection):
         '''
         Changes the selection and notifies users through on_selection_changed.
@@ -21,9 +23,11 @@ class EPSelectionService(EPSelectionHistory):
             A list with the obj_ids selected in EPModelsContainer.
         '''
 
+    @abstract
     def get_source(self):
         pass
 
+    @abstract
     def get_selection(self):
         '''
         :rtype list(str):
