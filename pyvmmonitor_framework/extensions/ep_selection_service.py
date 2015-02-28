@@ -7,6 +7,15 @@ from pyvmmonitor_core import abstract
 
 
 class EPSelectionService(EPSelectionHistory):
+    '''
+    Note: the PluginManager is able to keep instances alive through each context, so, if there are
+    many incompatible selections, one could ask for different selection contexts.
+    
+    I.e.:
+    
+    PluginManager.get_instance(EPSelectionHistory) as the default data selected and
+    PluginManager.get_instance(EPSelectionHistory, 'window') for the window selected.
+    '''
 
     def __init__(self):
         self.on_selection_changed = Callback()  # Called as on_selection_changed(source, selection)
@@ -19,8 +28,8 @@ class EPSelectionService(EPSelectionHistory):
         :param source:
             The object that's the source of the selection (could be anything).
             
-        :param list(str) selection:
-            A list with the obj_ids selected in EPModelsContainer.
+        :param object selection:
+            The selected object (usually a string which maps to an obj_id in the model).
         '''
 
     @abstract
@@ -30,6 +39,6 @@ class EPSelectionService(EPSelectionHistory):
     @abstract
     def get_selection(self):
         '''
-        :rtype list(str):
-            Returns a list with the selected item(s)
+        :rtype object:
+            Return the selection selected.
         '''
