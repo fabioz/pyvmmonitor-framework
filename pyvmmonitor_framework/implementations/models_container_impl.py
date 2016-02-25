@@ -1,10 +1,13 @@
 # License: LGPL
 #
 # Copyright: Brainwy Software
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import sys
 
-from pyvmmonitor_core import thread_utils, overrides
+from pyvmmonitor_core import thread_utils, overrides, compat
 from pyvmmonitor_core.weak_utils import get_weakref
 from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContainer,\
     EPModelsContainerNode
@@ -203,7 +206,7 @@ class ModelsContainer(EPModelsContainer):
             yield obj_id, child.data
 
     def _iter_recursive_no_class(self, node):
-        for obj_id, child in node.children.iteritems():
+        for obj_id, child in compat.iteritems(node.children):
             yield obj_id, child.data
 
             for data in self._iter_recursive_no_class(child):
@@ -248,7 +251,7 @@ class ModelsContainer(EPModelsContainer):
         ids_len = ids.__len__()
 
         if ids_len == 1:
-            return self[ids.__iter__().next()]
+            return self[compat.next(ids.__iter__())]
 
         elif ids_len == 0:
             return None
