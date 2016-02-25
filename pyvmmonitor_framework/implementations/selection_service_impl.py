@@ -5,6 +5,12 @@ from pyvmmonitor_core import overrides
 from pyvmmonitor_core.thread_utils import is_in_main_thread
 from pyvmmonitor_framework.extensions.ep_selection_service import EPSelectionService
 
+import sys
+
+if sys.version_info[0] < 3:
+    basestring = basestring
+else:
+    basestring = (str, bytes)
 
 class SelectionService(EPSelectionService):
 
