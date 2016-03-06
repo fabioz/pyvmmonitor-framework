@@ -1,15 +1,17 @@
 # License: LGPL
 #
 # Copyright: Brainwy Software
+from collections import OrderedDict
+
 from pyvmmonitor_core import abstract
 from pyvmmonitor_core.callback import Callback
-from collections import OrderedDict
+
 
 class EPModelsContainerNode(object):
     '''
     Identifies a node in the models container (so that we have items in tree-order).
     '''
-    
+
     def __init__(self, parent, obj_id, data):
         '''
         :param EPModelsContainerNode parent: parent node
@@ -105,7 +107,7 @@ class EPModelsContainer(object):
     def itertreenodes(self, node=None):
         '''
         Iter through nodes sorted in tree order (siblings may appear in any order).
-        
+
         :param EPModelsContainerNode node:
         :return iterator(obj).
         '''
@@ -126,7 +128,7 @@ class EPModelsContainer(object):
     def find_instance(self, class_):
         '''
         Finds an instance of the given class and returns it (returns None if it does not exist).
-        
+
         :raise ValueError: If more than one instance is found for the given class.
         '''
 
@@ -135,4 +137,3 @@ class EPModelsContainer(object):
         '''
         Returns an iterator over all the instances that implement a given class.
         '''
-        
