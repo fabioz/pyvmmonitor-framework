@@ -13,11 +13,9 @@ from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContain
     EPModelsContainerNode
 
 
-
 class _Node(EPModelsContainerNode):
 
     __slots__ = ['parent', 'data', 'obj_id', 'children', '_prefix_to_id']
-
 
     def add_child(self, node):
         self.children[node.obj_id] = node
@@ -237,7 +235,7 @@ class ModelsContainer(EPModelsContainer):
 
     @overrides(EPModelsContainer.iteritems)
     def iteritems(self):
-        for key, node in self._fast.iteritems():
+        for key, node in compat.iteritems(self._fast):
             yield key, node.data
 
     @overrides(EPModelsContainer.itervalues)
