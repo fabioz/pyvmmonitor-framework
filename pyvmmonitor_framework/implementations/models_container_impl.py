@@ -101,9 +101,10 @@ class ModelsContainer(EPModelsContainer):
 
     @overrides(EPModelsContainer.get)
     def get(self, obj_id, default=None):
-        if obj_id in self._fast:
-            return self._fast[obj_id].data
-        return default
+        node = self._fast.get(obj_id)
+        if node is None:
+            return default
+        return node.data
 
     @overrides(EPModelsContainer.__contains__)
     def __contains__(self, obj_id):
