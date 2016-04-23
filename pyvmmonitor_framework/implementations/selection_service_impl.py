@@ -20,7 +20,6 @@ class SelectionService(EPSelectionService):
         EPSelectionService.__init__(self)
         self._selection = ()
         self._source = None
-        self._in_selection = 0
 
     @overrides(EPSelectionService.set_selection)
     def set_selection(self, source, selection):
@@ -34,19 +33,14 @@ class SelectionService(EPSelectionService):
 
         assert is_in_main_thread(), 'Can only change selection in main thread.'
 
-        if selection == self._selection and self._in_selection:
-            # I.e.: a selection by some object triggered a selection in another object for the
-            # same elements (in which case we can safely ignore it).
-            return
+        if selection == self._selection:
+            return False
 
         self._selection = selection
         self._source = source
 
-        self._in_selection += 1
-        try:
-            self._do_selection(source, selection)
-        finally:
-            self._in_selection -= 1
+        self._do_selection(source, selection)
+        return True
 
     def _do_selection(self, source, selection):
         '''
