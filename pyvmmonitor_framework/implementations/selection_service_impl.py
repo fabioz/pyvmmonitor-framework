@@ -4,6 +4,7 @@
 import sys
 
 from pyvmmonitor_core import overrides
+from pyvmmonitor_core.iterables import remove_duplicates
 from pyvmmonitor_core.thread_utils import is_in_main_thread
 from pyvmmonitor_framework.extensions.ep_selection_service import EPSelectionService
 
@@ -23,11 +24,11 @@ class SelectionService(EPSelectionService):
 
     @overrides(EPSelectionService.set_selection)
     def set_selection(self, source, selection):
-        if isinstance(selection, list):
-            selection = tuple(selection)
-
         if isinstance(selection, basestring):
             selection = (selection,)
+
+        # Note: besides removing the duplicates, will also convert the type to a tuple.
+        selection = remove_duplicates(selection, ret_type=tuple)
 
         assert isinstance(selection, tuple)
 
