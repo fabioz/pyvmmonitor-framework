@@ -196,12 +196,12 @@ class ModelsContainer(EPModelsContainer):
                 return self._iter_no_recursive_no_class(node)
 
     def _iter_no_recursive_class(self, node, class_):
-        for obj_id, child in node.children.iteritems():
+        for obj_id, child in compat.iteritems(node.children):
             if isinstance(child.data, class_):
                 yield obj_id, child.data
 
     def _iter_no_recursive_no_class(self, node):
-        for obj_id, child in node.children.iteritems():
+        for obj_id, child in compat.iteritems(node.children):
             yield obj_id, child.data
 
     def _iter_recursive_no_class(self, node):
@@ -212,7 +212,7 @@ class ModelsContainer(EPModelsContainer):
                 yield data
 
     def _iter_recursive_class(self, node, class_):
-        for obj_id, child in node.children.iteritems():
+        for obj_id, child in compat.iteritems(node.children):
             if isinstance(child.data, class_):
                 yield obj_id, child.data
 
@@ -228,7 +228,7 @@ class ModelsContainer(EPModelsContainer):
         if node is None:
             node = self._root
 
-        for child in node.children.itervalues():
+        for child in compat.itervalues(node.children):
             yield child
 
             for data in self.itertreenodes(child):
