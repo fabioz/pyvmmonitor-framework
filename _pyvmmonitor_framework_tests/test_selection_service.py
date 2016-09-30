@@ -1,8 +1,7 @@
-import threading
 import time
 
+from pyvmmonitor_core import compat
 from pyvmmonitor_core.thread_utils import is_in_main_thread
-from pyvmmonitor_framework.implementations.selection_service_impl import SelectionService
 
 
 def _assert_condition_within_timeout(condition, timeout=2.):
@@ -13,7 +12,7 @@ def _assert_condition_within_timeout(condition, timeout=2.):
         if isinstance(c, bool):
             if c:
                 return
-        elif isinstance(c, basestring):
+        elif isinstance(c, (compat.bytes, compat.unicode)):
             if not c:
                 return
         else:
@@ -29,6 +28,7 @@ def _assert_condition_within_timeout(condition, timeout=2.):
 
 
 def test_selection_service():
+    from pyvmmonitor_framework.implementations.selection_service_impl import SelectionService
     s = SelectionService()
 
     called_result = []
@@ -44,6 +44,7 @@ def test_selection_service():
         except:
             called_result.append('ok')  # we expect the exception
 
+    import threading
     threading.Thread(target=call).start()
 
     def check():
