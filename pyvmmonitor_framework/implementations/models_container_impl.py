@@ -32,7 +32,8 @@ class _Node(EPModelsContainerNode):
 class ModelPart(object):
 
     '''
-    Instances added to the ModelsContainer will have the attributes below set when they enter the model.
+    Instances added to the ModelsContainer will have the attributes below set when they enter the
+    model.
 
     :ivar str obj_id: This is the id of the object in the model.
     :ivar PluginManager pm: weak-reference to the PluginManager.

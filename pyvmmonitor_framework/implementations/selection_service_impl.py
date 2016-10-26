@@ -17,7 +17,8 @@ else:
 
 class SelectionService(EPSelectionService):
 
-    def __init__(self):
+    def __init__(self, reselect_on_same_selection=False):
+        self.reselect_on_same_selection = reselect_on_same_selection
         EPSelectionService.__init__(self)
         self._selection = ()
         self._source = None
@@ -35,7 +36,8 @@ class SelectionService(EPSelectionService):
         assert is_in_main_thread(), 'Can only change selection in main thread.'
 
         if selection == self._selection:
-            return False
+            if not self.reselect_on_same_selection:
+                return False
 
         self._selection = selection
         self._source = source

@@ -1,4 +1,5 @@
-from py.test import raises
+
+from pytest import raises
 
 from pyvmmonitor_core.plugins import PluginManager, NotInstanceError
 from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContainer
