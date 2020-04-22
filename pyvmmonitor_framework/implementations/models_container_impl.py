@@ -7,10 +7,10 @@ except ImportError:
     from io import StringIO
 import sys
 
-from pyvmmonitor_core import thread_utils, overrides, compat
+from pyvmmonitor_core import compat, overrides, thread_utils
 from pyvmmonitor_core.weak_utils import get_weakref
-from pyvmmonitor_framework.extensions.ep_models_container import EPModelsContainer,\
-    EPModelsContainerNode
+from pyvmmonitor_framework.extensions.ep_models_container import (EPModelsContainer,
+                                                                  EPModelsContainerNode)
 
 
 class _Node(EPModelsContainerNode):
@@ -235,13 +235,13 @@ class ModelsContainer(EPModelsContainer):
             for data in self.itertreenodes(child):
                 yield data
 
-    @overrides(EPModelsContainer.iteritems)
-    def iteritems(self):
+    @overrides(EPModelsContainer.items)
+    def items(self):
         for key, node in compat.iteritems(self._fast):
             yield key, node.data
 
-    @overrides(EPModelsContainer.itervalues)
-    def itervalues(self):
+    @overrides(EPModelsContainer.values)
+    def values(self):
         for node in self._fast.itervalues():
             yield node.data
 

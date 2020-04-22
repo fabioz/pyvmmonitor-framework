@@ -113,13 +113,13 @@ class EPModelsContainer(object):
         '''
 
     @abstract
-    def iteritems(self):
+    def items(self):
         '''
         Iterates over all the items in the model (obj_id, obj).
         '''
 
     @abstract
-    def itervalues(self):
+    def values(self):
         '''
         Iterates over all the instances in the model (unsorted).
         '''
