@@ -161,7 +161,7 @@ class ModelsContainer(EPModelsContainer):
             node = self._root
 
         pre = ' ' * (2 * level)
-        for child in node.children.itervalues():
+        for child in compat.itervalues(node.children):
             stream.write('%s%s: %s\n' % (pre, child.obj_id, child.data.__class__.__name__))
             self.print_rep(child, level + 1, stream)
 
@@ -242,7 +242,7 @@ class ModelsContainer(EPModelsContainer):
 
     @overrides(EPModelsContainer.values)
     def values(self):
-        for node in self._fast.itervalues():
+        for node in compat.itervalues(self._fast):
             yield node.data
 
     @overrides(EPModelsContainer.find_instance)
